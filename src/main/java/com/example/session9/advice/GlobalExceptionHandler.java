@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiDataResponse> handleValidationException(MethodArgumentNotValidException ex){
         HashMap<String,String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(error -> errors.put(error.getField(),error.getDefaultMessage()));
@@ -20,38 +20,44 @@ public class GlobalExceptionHandler {
                 .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(errors).httpStatus(HttpStatus.BAD_REQUEST).build());
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ApiDataResponse>handleResourceNotFoundException(ResourceNotFoundException exception){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiDataResponse> handleResourceNotFoundException(ResourceNotFoundException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiDataResponse.builder().success(false).message("Khong tim thay du lieu").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
     }
-    @ExceptionHandler
-    public ResponseEntity<ApiDataResponse>handleResourceNotFoundException(EmailExistException exception){
+
+    @ExceptionHandler(EmailExistException.class)
+    public ResponseEntity<ApiDataResponse> handleEmailExistException(EmailExistException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ApiDataResponse.builder().success(false).message("Du lieu bi trung").data(exception.getMessage()).httpStatus(HttpStatus.CONFLICT).build());
     }
-    @ExceptionHandler
-    public ResponseEntity<ApiDataResponse>handleImageFileTooLargeException(ImageFileTooLargeException exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.CONFLICT).build());
-    }
-    @ExceptionHandler
-    public ResponseEntity<ApiDataResponse>handleInvalidImageFileException(InvalidImageFileException exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.CONFLICT).build());
-    }
-    @ExceptionHandler
-    public ResponseEntity<ApiDataResponse>handlePdfFileTooLargeException(PdfFileTooLargeException exception){
+
+    @ExceptionHandler(ImageFileTooLargeException.class)
+    public ResponseEntity<ApiDataResponse> handleImageFileTooLargeException(ImageFileTooLargeException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
     }
-    @ExceptionHandler
-    public ResponseEntity<ApiDataResponse>handleFileEmptyException(FileEmptyException exception){
+
+    @ExceptionHandler(InvalidImageFileException.class)
+    public ResponseEntity<ApiDataResponse> handleInvalidImageFileException(InvalidImageFileException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
     }
-    @ExceptionHandler
-    public ResponseEntity<ApiDataResponse>handleInvalidPdfFileException(InvalidPdfFileException exception){
+
+    @ExceptionHandler(PdfFileTooLargeException.class)
+    public ResponseEntity<ApiDataResponse> handlePdfFileTooLargeException(PdfFileTooLargeException exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
+    }
+
+    @ExceptionHandler(FileEmptyException.class)
+    public ResponseEntity<ApiDataResponse> handleFileEmptyException(FileEmptyException exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
+    }
+
+    @ExceptionHandler(InvalidPdfFileException.class)
+    public ResponseEntity<ApiDataResponse> handleInvalidPdfFileException(InvalidPdfFileException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
     }
