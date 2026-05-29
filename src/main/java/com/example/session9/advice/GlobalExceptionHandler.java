@@ -32,32 +32,8 @@ public class GlobalExceptionHandler {
                 .body(ApiDataResponse.builder().success(false).message("Du lieu bi trung").data(exception.getMessage()).httpStatus(HttpStatus.CONFLICT).build());
     }
 
-    @ExceptionHandler(ImageFileTooLargeException.class)
-    public ResponseEntity<ApiDataResponse> handleImageFileTooLargeException(ImageFileTooLargeException exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
-    }
-
-    @ExceptionHandler(InvalidImageFileException.class)
-    public ResponseEntity<ApiDataResponse> handleInvalidImageFileException(InvalidImageFileException exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
-    }
-
-    @ExceptionHandler(PdfFileTooLargeException.class)
-    public ResponseEntity<ApiDataResponse> handlePdfFileTooLargeException(PdfFileTooLargeException exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
-    }
-
-    @ExceptionHandler(FileEmptyException.class)
-    public ResponseEntity<ApiDataResponse> handleFileEmptyException(FileEmptyException exception){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
-    }
-
-    @ExceptionHandler(InvalidPdfFileException.class)
-    public ResponseEntity<ApiDataResponse> handleInvalidPdfFileException(InvalidPdfFileException exception){
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiDataResponse> handleBadRequestException(BadRequestException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiDataResponse.builder().success(false).message("Du lieu khong hop le").data(exception.getMessage()).httpStatus(HttpStatus.BAD_REQUEST).build());
     }

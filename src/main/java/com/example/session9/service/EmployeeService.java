@@ -1,8 +1,7 @@
 package com.example.session9.service;
 
+import com.example.session9.exception.BadRequestException;
 import com.example.session9.exception.EmailExistException;
-import com.example.session9.exception.ImageFileTooLargeException;
-import com.example.session9.exception.InvalidImageFileException;
 import com.example.session9.exception.ResourceNotFoundException;
 import com.example.session9.model.dto.request.EmployeeCreateDTO;
 import com.example.session9.model.entity.Department;
@@ -33,11 +32,11 @@ public class EmployeeService {
     public Employee updateEmployee(Long id, MultipartFile file){
 
          if(file.getSize() > 2*1024*1024){
-             throw new ImageFileTooLargeException("file an qua lon");
+             throw new BadRequestException("file an qua lon");
          }
         String fileName = file.getOriginalFilename();
         if(fileName == null || !fileName.matches("(?i).+\\.(png|jpg|jpeg)$")){
-            throw new InvalidImageFileException("Chi cap nhan file anh duoi png, jpg, jpeg");
+            throw new BadRequestException("Chi cap nhan file anh duoi png, jpg, jpeg");
         }
         String imageUrl = cloudinaryService.uploadFile(file);
         Employee employee= employeeReposity.findById(id).orElseThrow(()-> new ResourceNotFoundException("Khong tim thay nhan vien"));
